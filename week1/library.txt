@@ -1,0 +1,74 @@
+St Mary's Library
+|-- Sections
+|   |-- Fictional
+|   |   |-- Books
+|   |   |   |-- Book(B-001)
+|   |   |   |   |-- Book ID: B-001
+|   |   |   |   |-- Author: Hiram Lodge
+|   |   |   |   |-- Title: asdhsjdsh
+|   |   |   |   |-- Number Of Copies: 3
+|   |   |   |-- Book(B-002)
+|   |   |       |-- Book ID: B-002
+|   |   |       |-- Author: Fred Andrews
+|   |   |       |-- Title: asdhdsgd
+|   |   |       |-- Number Of Copies: 2
+|   |   |
+|   |   |-- Periodicals
+|   |       |-- Periodical (P-001)
+|   |       |   |-- Periodical ID: P-001
+|   |       |   |-- Title: John Doe
+|   |       |   |-- Number Of Copies: 2
+|   |       |-- Periodical (P-002)
+|   |           |-- Periodical ID: P-002
+|   |           |-- Title: fuefufh
+|   |           |-- Number Of Copies: 4
+|   |
+|   |-- Non-Fictional
+|       |-- Books
+|       |   |-- Book(B-NF-001)
+|       |   |   |-- Book ID: B-NF-001
+|       |   |   |-- Author: Hiramione Lodge
+|       |   |   |-- Title: wqewddsxcs
+|       |   |   |-- Number Of Copies: 3
+|       |   |-- Book(B-NF-002)
+|       |       |-- Book ID: B-NF-002
+|       |       |-- Author: Archie Andrews
+|       |       |-- Title: wwrwwe
+|       |       |-- Number Of Copies: 2
+|       |
+|       |-- Periodicals
+|           |-- Periodical (P-NF-001)
+|           |   |-- Periodical ID: P-NF-001
+|           |   |-- Title: lsadksak
+|           |   |-- Number Of Copies: 1
+|           |-- Periodical (P-NF-002)
+|               |-- Periodical ID: P-NF-002
+|               |-- Title: qweewq
+|               |-- Number Of Copies: 8
+|
+|-- Users
+|   |-- User (U-001)
+|   |   |-- User ID: U-001
+|   |   |-- Name: Lionel Messi
+|   |   |-- Borrowed Books:
+|   |   |   |--B-NF-001
+|   |   |   |--B-001
+|   |   |-- Borrowed Equipment
+|   |       |--Laptop
+|   |-- User (U-002)
+|       |-- User ID: B-002
+|       |-- Author: Cristiano Ronaldo
+|       |-- Borrowed Books:
+|       |   |--B-NF-002
+|       |   |--B-001
+|       |   |--B-002
+|       |-- Borrowed Equipment
+|           |--Laptop
+|
+|-- Facilities
+    |-- Facility
+    |   |-- Facility Type: Study Area
+    |   |-- Number Of Items: 3
+    |-- Facility
+        |-- Facility Type: Workstation
+        |-- Number Of Items: 5
