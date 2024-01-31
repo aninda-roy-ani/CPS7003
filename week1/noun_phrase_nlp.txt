@@ -1,0 +1,16 @@
+
+
+Entities:
+	-payroll management system
+	-HR personnel
+	-managers
+	-reports
+	-employees
+	-payrolls
+
+Relationships/Actions:
+	-HR manages employee information
+	-manager allocates payrolls to employees
+	-the system generates reports on payroll processing and financial summaries
+
+
