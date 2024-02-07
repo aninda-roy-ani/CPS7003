@@ -1,0 +1,46 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table sale {
+  id integer [pk]
+  order_id integer
+  product_id integer
+  supplier_id integer 
+}
+
+Table supplier{
+  supplier_id integer [pk]
+  name text
+  location text
+}
+
+Table product{
+  product_id integer [pk]
+  name text
+  price text
+  category_id integer
+}
+
+Table product_category{
+  category_id integer [pk]
+  name text
+}
+
+Table customer{
+  id integer [pk]
+  first_name text
+  last_name text
+  mobile text
+  email text
+}
+
+Table order{
+  order_id integer [pk]
+  order_date date
+  quantity integer
+}
+
+Ref: supplier.supplier_id > sale.supplier_id
+Ref: product_category.category_id > product.category_id
+Ref: product.product_id > sale.product_id
+Ref: order.order_id > sale.order_id
