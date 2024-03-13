@@ -3,6 +3,7 @@ from sqlalchemy import Column, Integer, String, ForeignKeyConstraint
 
 Base = declarative_base()
 
+
 class User(Base):
     __tablename__ = "User"
     UserID = Column(Integer, primary_key=True, autoincrement=True)

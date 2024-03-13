@@ -3,6 +3,7 @@ from sqlalchemy import Column, Integer, String
 
 Base = declarative_base()
 
+
 class Role(Base):
     __tablename__ = "Role"
     RoleID = Column(Integer, primary_key=True, autoincrement=True)
