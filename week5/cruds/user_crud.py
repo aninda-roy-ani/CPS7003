@@ -1,22 +1,23 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from week5.database.database import DATABASE_PATH
+from week5.database.university import DATABASE_PATH
 from week5.entities.user import User
 
 
-class UserCRUD():
+class UserCRUD:
 
     # constructor
-    def __init__(self):
-        self.engine = create_engine(f"sqlite///{DATABASE_PATH}")
-        self.Session = sessionmaker(bind=self.engine)
+    def __init__(self, session):
+        #self.engine = create_engine(f"sqlite:///{DATABASE_PATH}")
+        self.Session = session
+        #self.session = sessionmaker(bind=self.engine)
 
     # create
     def create_user(self, first_name, last_name, email, role):
         session = self.Session()
 
         try:
-            user = {"FirstName": first_name, "LastName": last_name, "Email": email, "Role": role}
+            user = {"FirstName": first_name, "LastName": last_name, "Email": email, "RoleID": role}
             new_user = User(**user)
             session.add(new_user)
             session.commit()
@@ -81,3 +82,11 @@ class UserCRUD():
             print(f"error: {e}")
         finally:
             session.close()
+
+'''
+engine = create_engine(f"sqlite:///{DATABASE_PATH}")
+session = sessionmaker(bind=engine)
+u = UserCRUD(session)
+u.create_user("Aninda", "Roy Ani", "2313005@live.stmarys.ac.uk", 1)
+'''
+

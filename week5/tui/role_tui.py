@@ -1,8 +1,9 @@
 from week5.services.role_service import RoleService
 
+
 class RoleTUI:
-    def __init__(self, session):
-        self.role_service = RoleService(session)
+    def __init__(self, ):
+        self.role_service = RoleService()
 
     def create_role(self):
         role_name = input("Enter role name: ")
@@ -15,7 +16,7 @@ class RoleTUI:
 
     def display_all_roles(self):
         try:
-            roles = self.role_service.get_all_roles()
+            roles = self.role_service.retrieve_all_roles()
             print("All Roles:")
             for role in roles:
                 print(f"ID: {role.RoleID}, Name: {role.RoleName}")

@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from week5.database.database import DATABASE_PATH
+from week5.database.university import DATABASE_PATH
 from week5.tui.role_tui import RoleTUI
 
 if __name__ == "__main__":

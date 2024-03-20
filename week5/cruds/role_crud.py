@@ -1,21 +1,24 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from week5.database.database import DATABASE_PATH
+from week5.database.university import DATABASE_PATH
 from week5.entities.role import Role
 
 
 class RoleCRUD:
 
     # constructor
-    def __init__(self, session):
+    def __init__(self):
         self.engine = create_engine(f"sqlite:///{DATABASE_PATH}")
-        self.Session = session
+        self.Session = sessionmaker(bind=self.engine)
+        print("ROLE CRUD")
+        #self.Session = session
 
     # create
     def create_role(self, role_name):
         session = self.Session()
 
         try:
+            print("ROLE CRUD CREATE ROLE")
             role = {"RoleName": role_name}
             new_role = Role(**role)
             session.add(new_role)
