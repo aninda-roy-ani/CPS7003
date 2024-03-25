@@ -46,6 +46,19 @@ class ModuleTutorCRUD:
         finally:
             session.close()
 
+    def retrieve_module_tutor_id(self, module_id, user_id):
+        session = self.Session()
+        try:
+            module_tutor = session.query(ModuleTutor).filter_by(ModuleID=module_id).filter_by(UserID=user_id).first()
+            if module_tutor:
+                return module_tutor.ID
+            else:
+                logging.error(f"Module Tutor with Module ID {module_id} and UserID {user_id} does not exist")
+        except SQLAlchemyError as e:
+            logging.error(f"Error while retrieving Module Tutor ID: {str(e)}")
+        finally:
+            session.close()
+
     def retrieve_all_module_tutors(self):
         session = self.Session()
         try:

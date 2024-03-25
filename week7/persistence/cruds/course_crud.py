@@ -28,6 +28,7 @@ class CourseCRUD:
             session.add(new_course)
             session.commit()
             logging.info(f"Course added with CourseID: {new_course.CourseID}")
+            return new_course
         except SQLAlchemyError as e:
             session.rollback()
             logging.error(f"Error adding Course: {str(e)}")

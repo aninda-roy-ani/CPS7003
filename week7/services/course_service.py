@@ -14,7 +14,7 @@ class CourseService:
         if not award or not title or not course_leader or not subject_id:
             logging.error("Fields can not be empty")
             return None
-        self.course_crud.create_course(award, title, course_leader, subject_id)
+        return self.course_crud.create_course(award, title, course_leader, subject_id)
 
     # retrieve
     def retrieve_course(self, course_id):

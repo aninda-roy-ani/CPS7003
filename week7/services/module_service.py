@@ -18,6 +18,7 @@ class ModuleService:
             return None
         module = self.module_crud.create_module(code, title, level, module_leader, course_id)
         self.module_tutor_crud.create_module_tutor(module.ModuleID, tutor)
+        return module
 
     # retrieve
     def retrieve_module(self, module_id):
@@ -32,12 +33,16 @@ class ModuleService:
     def retrieve_module_tutor(self, id):
         return self.module_tutor_crud.retrieve_module_tutor(id)
 
+    def retrieve_all_modules_tutor(self):
+        return self.module_tutor_crud.retrieve_all_module_tutors()
+
     # update
     def update_module(self, module_id, code, title, level, module_leader, course_id):
         if not module_id or not code or not title or not level or not module_leader or not course_id:
             logging.error("Fields can not be empty")
             return None
         self.module_crud.update_module(module_id, code, title, level, module_leader, course_id)
+
 
     def update_module_tutor(self, id, module_id, user_id):
         return self.module_tutor_crud.update_module_tutor(id, module_id, user_id)
