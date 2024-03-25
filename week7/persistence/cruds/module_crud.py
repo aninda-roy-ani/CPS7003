@@ -29,6 +29,7 @@ class ModuleCRUD:
             session.add(new_module)
             session.commit()
             logging.info(f"Created module: {new_module.ModuleID}")
+            return new_module
         except SQLAlchemyError as e:
             session.rollback()
             logging.error(f"Error while creating module: {str(e)}")

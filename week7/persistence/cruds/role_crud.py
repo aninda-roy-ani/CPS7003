@@ -118,6 +118,4 @@ if __name__ == "__main__":
     print(role.retrieve_role_by_role_name('STUDENT'))
     role.create_role("ASSOCIATE PROFESSOR")
     '''
-    role.retrieve_role_by_role_name("sdjf")
-    inp = input("Enter role: ")
-    inp = input()
+    role.retrieve_all_roles()
