@@ -43,14 +43,16 @@ class MainTUI:
                 print("Invalid Choice! Please try again.")
 
     def start(self):
-        print("\n\n         Welcome  to  the  University  Management  System!")
-        print("        ---------------------------------------------------")
-        username = input("\n              Enter your username: ")
-        password = input("              Enter your password: ")
-        if self.auth.is_authenticated(username, password):
-            self.menu()
-        else:
-            exit(1)
+        print("\n\nWelcome  to  the  University  Management  System!")
+        print("-------------------------------------------------")
+        while True:
+            username = input("\nEnter your username: ")
+            password = input("Enter your password: ")
+            if self.auth.is_authenticated(username, password):
+                self.menu()
+                break
+            else:
+                pass
 
 
 if __name__ == "__main__":
