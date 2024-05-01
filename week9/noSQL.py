@@ -42,6 +42,6 @@ if __name__ == "__main__":
 
     print(db.find_one('users', {'name':'Aninda Roy Ani'}))
 
-    print(db.update_one('users',{'name':'Aninda Roy Ani'}, {                                     '$set':{'age':29}}))
+    print(db.update_one('users',{'name':'Aninda Roy Ani'}, {'$set':{'age':29}}))
 
     print(db.delete_one('users',{'name':'Aninda Roy Ani'}))
