@@ -10,4 +10,5 @@ class Patient(Base):
     patient_name = Column(String, nullable=False)
     date_of_birth = Column(Date)
     gender = Column(String)
-    contact_information = Column(String)
+    contact_no = Column(String)
+    address = Column(String)

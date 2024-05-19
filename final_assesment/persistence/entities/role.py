@@ -7,4 +7,4 @@ Base = declarative_base()
 class Role(Base):
     __tablename__ = "Role"
     role_id = Column(Integer, primary_key=True, autoincrement=True)
-    role_name = Column(String, nullable=False)
+    role_name = Column(String, nullable=False, unique=True)

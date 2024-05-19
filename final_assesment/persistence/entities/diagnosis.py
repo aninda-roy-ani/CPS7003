@@ -4,8 +4,8 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
-class DiagnosisPlan(Base):
-    __tablename__ = "Diagnosis_Plan"
+class Diagnosis(Base):
+    __tablename__ = "Diagnosis"
     diagnosis_id = Column(Integer, primary_key=True, autoincrement=True)
     patient_id = Column(Integer, nullable=False)
     diagnosis_details = Column(String)
