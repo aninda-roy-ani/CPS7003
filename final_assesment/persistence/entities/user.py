@@ -9,6 +9,8 @@ class User(Base):
     user_id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String, nullable=False)
     password = Column(String, nullable=False)
+    first_name = Column(String)
+    last_name = Column(String)
     role_id = Column(Integer)
 
     ForeignKeyConstraint(

@@ -92,4 +92,12 @@ class UserCRUD:
 
 if __name__ == "__main__":
     x = UserCRUD()
-    x.create_user('Prins',)
+    x.create_user('prins', '111111', 'Prins', 'Butt', 5)
+    x.create_user('ani', '111111', 'Ani', 'Roy', 1)
+    x.create_user('messi', '111111', 'Messi', 'Lionel', 2)
+    x.create_user('neymar', '111111', 'Neymar', 'Jr', 3)
+    x.create_user('tiasha', '111111', 'Tiasha', 'Rubi', 4)
+    users = x.retrieve_all_users()
+    for user in users:
+        print(user.username, user.first_name, user.last_name, user.role_id)
+
