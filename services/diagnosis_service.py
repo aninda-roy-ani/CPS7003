@@ -1,0 +1,69 @@
+from datetime import datetime
+
+from persistence.cruds.diagnosis_crud import DiagnosisCRUD
+import logging
+
+
+class DiagnosisService:
+
+    # constructor
+    def __init__(self):
+        self.diagnosis_crud = DiagnosisCRUD()
+        self.logger = logging.getLogger(__name__)
+
+    # create
+    def create_diagnosis_plan(self, patient_id, diagnosis_details, diagnosis_date):
+        if not all((patient_id, diagnosis_details, diagnosis_date)):
+            self.logger.error("Missing diagnosis plan creation info")
+            return False
+        self.diagnosis_crud.create_diagnosis_plan(patient_id, diagnosis_details, diagnosis_date)
+        return True
+
+    # retrieve
+    def retrieve_diagnosis_plan(self, diagnosis_id):
+        if not diagnosis_id:
+            self.logger.error("No diagnosis id provided")
+            return None
+        return self.diagnosis_crud.retrieve_diagnosis_plan(diagnosis_id)
+
+    # retrieve all
+    def retrieve_all_diagnosis_plans(self):
+        return self.diagnosis_crud.retrieve_all_diagnosis_plans()
+
+    def retrieve_diagnosis_by_patient_id(self, patient_id):
+        return self.diagnosis_crud.retrieve_diagnosis_by_patient_id(patient_id)
+
+    # update
+    def update_diagnosis_plan(self, diagnosis_id, patient_id=None, diagnosis_details=None, diagnosis_date=None):
+        if not diagnosis_id:
+            self.logger.error("No diagnosis id provided")
+            return False
+        diagnosis_plan = self.diagnosis_crud.retrieve_diagnosis_plan(diagnosis_id)
+        if not diagnosis_plan:
+            self.logger.error(f"Diagnosis plan with ID {diagnosis_id} does not exist")
+            return False
+        if patient_id:
+            diagnosis_plan.patient_id = patient_id
+        if diagnosis_details:
+            diagnosis_plan.diagnosis_details = diagnosis_details
+        if diagnosis_date:
+            diagnosis_plan.diagnosis_date = diagnosis_date
+        self.diagnosis_crud.update_diagnosis_plan(diagnosis_id, patient_id, diagnosis_details, diagnosis_date)
+        return True
+
+    # delete
+    def delete_diagnosis_plan(self, diagnosis_id):
+        if not diagnosis_id:
+            self.logger.error("No diagnosis id provided")
+            return False
+        self.diagnosis_crud.delete_diagnosis_plan(diagnosis_id)
+        return True
+
+
+if __name__ == "__main__":
+    x = DiagnosisService()
+    x.create_diagnosis_plan(1, 'diabetics', datetime(2024, 5, 20))
+    x.create_diagnosis_plan(2, 'hamstring', datetime(2024, 6, 1))
+    alls = x.retrieve_all_diagnosis_plans()
+    for a in alls:
+        print(a.diagnosis_id, a.diagnosis_date, a.diagnosis_details)

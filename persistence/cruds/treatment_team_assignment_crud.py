@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import sessionmaker
-from final_assesment.persistence.entities.treatment_team_assignment import TreatmentTeamAssignment
-from final_assesment.database.sqlite3_database import DATABASE
+from persistence.entities.treatment_team_assignment import TreatmentTeamAssignment
+from database.sqlite3_database import DATABASE
 import logging
 
 

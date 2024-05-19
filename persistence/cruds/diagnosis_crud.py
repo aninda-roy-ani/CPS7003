@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import sessionmaker
-from final_assesment.persistence.entities.diagnosis import Diagnosis
-from final_assesment.database.sqlite3_database import DATABASE
+from persistence.entities.diagnosis import Diagnosis
+from database.sqlite3_database import DATABASE
 import logging
 
 
@@ -50,6 +50,19 @@ class DiagnosisCRUD:
             return plans
         except SQLAlchemyError as e:
             logging.error(f"Error while retrieving all diagnosis plans: {str(e)}")
+        finally:
+            session.close()
+
+    def retrieve_diagnosis_by_patient_id(self, patient_id):
+        session = self.Session()
+        try:
+            plan = session.query(Diagnosis).filter_by(patient_id=patient_id).first()
+            if plan:
+                return plan
+            else:
+                logging.error(f"Diagnosis plan with Patient ID {patient_id} does not exist")
+        except SQLAlchemyError as e:
+            logging.error(f"Error while retrieving diagnosis plan: {str(e)}")
         finally:
             session.close()
 
