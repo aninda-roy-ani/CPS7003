@@ -1,25 +1,28 @@
 -- Users Table
-CREATE TABLE IF NOT EXISTS Users (
+CREATE TABLE IF NOT EXISTS User (
     user_id INTEGER PRIMARY KEY,
     username TEXT NOT NULL,
     password TEXT NOT NULL,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
     role_id INTEGER,
     FOREIGN KEY (role_id) REFERENCES Roles(role_id)
 );
 
 -- Roles Table
-CREATE TABLE IF NOT EXISTS Roles (
+CREATE TABLE IF NOT EXISTS Role (
     role_id INTEGER PRIMARY KEY,
-    role_name TEXT NOT NULL
+    role_name TEXT UNIQUE NOT NULL
 );
 
 -- Patients Table
-CREATE TABLE IF NOT EXISTS Patients (
+CREATE TABLE IF NOT EXISTS Patient (
     patient_id INTEGER PRIMARY KEY,
     patient_name TEXT NOT NULL,
     date_of_birth DATE,
     gender TEXT,
-    contact_information TEXT
+    contact_no TEXT,
+    address TEXT
 );
 
 -- Medical History Table
@@ -37,14 +40,16 @@ CREATE TABLE IF NOT EXISTS Medical_History (
 CREATE TABLE IF NOT EXISTS Treatment_Plan (
     treatment_id INTEGER PRIMARY KEY,
     patient_id INTEGER NOT NULL,
+    diagnosis_id INTEGER NOT NULL,
     treatment_details TEXT,
     start_date DATE,
     end_date DATE,
-    FOREIGN KEY (patient_id) REFERENCES Patients(patient_id)
+    FOREIGN KEY (patient_id) REFERENCES Patients(patient_id),
+    FOREIGN KEY (diagnosis_id) REFERENCES Diagnosis(diagnosis_id)
 );
 
 -- Diagnosis Plan Table
-CREATE TABLE IF NOT EXISTS Diagnosis_Plan (
+CREATE TABLE IF NOT EXISTS Diagnosis (
     diagnosis_id INTEGER PRIMARY KEY,
     patient_id INTEGER NOT NULL,
     diagnosis_details TEXT,
@@ -56,7 +61,9 @@ CREATE TABLE IF NOT EXISTS Diagnosis_Plan (
 CREATE TABLE IF NOT EXISTS Treatment_Team_Assignment (
     assignment_id INTEGER PRIMARY KEY,
     patient_id INTEGER NOT NULL,
+    treatment_id INTEGER NOT NULL,
     user_id INTEGER,
     FOREIGN KEY (patient_id) REFERENCES Patients(patient_id),
+    FOREIGN KEY (treatment_id) REFERENCES Treatment_Plan(treatment_id),
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
