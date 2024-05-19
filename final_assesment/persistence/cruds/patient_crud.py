@@ -14,11 +14,11 @@ class PatientCRUD:
         self.logger = logging.getLogger(__name__)
 
     # create
-    def create_patient(self, patient_name, date_of_birth, gender, contact_information):
+    def create_patient(self, patient_name, date_of_birth, gender, contact_no, address):
         session = self.Session()
         try:
             patient = Patient(patient_name=patient_name, date_of_birth=date_of_birth, gender=gender,
-                              contact_information=contact_information)
+                              contact_no=contact_no, address=address)
             session.add(patient)
             session.commit()
             logging.info(f"Patient {patient_name} created")
@@ -53,7 +53,7 @@ class PatientCRUD:
             session.close()
 
     # update
-    def update_patient(self, patient_id, patient_name, date_of_birth, gender, contact_information):
+    def update_patient(self, patient_id, patient_name, date_of_birth, gender, contact_no, address):
         session = self.Session()
         try:
             patient = session.query(Patient).filter_by(patient_id=patient_id).first()
@@ -61,7 +61,8 @@ class PatientCRUD:
                 patient.patient_name = patient_name
                 patient.date_of_birth = date_of_birth
                 patient.gender = gender
-                patient.contact_information = contact_information
+                patient.contact_no = contact_no
+                patient.address = address
                 session.commit()
                 logging.info(f"Patient with ID {patient_id} updated")
             else:
