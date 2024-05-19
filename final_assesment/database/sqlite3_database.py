@@ -9,11 +9,11 @@ logger = logging.getLogger(__name__)
 # Constants
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DATABASE_PATH = os.path.join(PROJECT_ROOT, 'database', 'StMarysMedTech.db')
-SCHEMA_FILE = "schema.sql"
+SCHEMA_FILE = "sqlite3_schema.sql"
 DATABASE = f"sqlite:///{DATABASE_PATH}"
 
 
-# Method for creating the database
+# Method for creating the sqlite database
 def create_database(db_name, schema_file):
     """
     A SQLite database using the provided schema file.
