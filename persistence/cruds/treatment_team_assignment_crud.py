@@ -14,13 +14,13 @@ class TreatmentTeamAssignmentCRUD:
         self.logger = logging.getLogger(__name__)
 
     # create
-    def create_assignment(self, patient_id, treatment_id, user_id):
+    def create_assignment(self, patient_id, treatment_id, employee_id):
         session = self.Session()
         try:
-            assignment = TreatmentTeamAssignment(patient_id=patient_id, treatment_id=treatment_id, user_id=user_id)
+            assignment = TreatmentTeamAssignment(patient_id=patient_id, treatment_id=treatment_id, employee_id=employee_id)
             session.add(assignment)
             session.commit()
-            logging.info(f"Assignment created for Patient ID {patient_id}, Treatment ID {treatment_id} and User ID {user_id}")
+            logging.info(f"Assignment created for Patient ID {patient_id}, Treatment ID {treatment_id} and Employee ID {employee_id}")
         except SQLAlchemyError as e:
             session.rollback()
             logging.error(f"Error while creating assignment: {str(e)}")
@@ -56,14 +56,14 @@ class TreatmentTeamAssignmentCRUD:
             session.close()
 
     # update
-    def update_assignment(self, assignment_id, patient_id, treatment_id, user_id):
+    def update_assignment(self, assignment_id, patient_id, treatment_id, employee_id):
         session = self.Session()
         try:
             assignment = session.query(TreatmentTeamAssignment).filter_by(assignment_id=assignment_id).first()
             if assignment:
                 assignment.patient_id = patient_id
                 assignment.treatment_id = treatment_id
-                assignment.user_id = user_id
+                assignment.employee_id = employee_id
                 session.commit()
                 logging.info(f"Assignment with ID {assignment_id} updated")
             else:

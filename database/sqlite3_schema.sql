@@ -1,8 +1,6 @@
 -- Users Table
-CREATE TABLE IF NOT EXISTS User (
-    user_id INTEGER PRIMARY KEY,
-    username TEXT NOT NULL,
-    password TEXT NOT NULL,
+CREATE TABLE IF NOT EXISTS Employee (
+    employee_id INTEGER PRIMARY KEY,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     role_id INTEGER,
@@ -63,8 +61,8 @@ CREATE TABLE IF NOT EXISTS Treatment_Team_Assignment (
     assignment_id INTEGER PRIMARY KEY,
     patient_id INTEGER NOT NULL,
     treatment_id INTEGER NOT NULL,
-    user_id INTEGER,
+    employee_id INTEGER,
     FOREIGN KEY (patient_id) REFERENCES Patients(patient_id),
     FOREIGN KEY (treatment_id) REFERENCES Treatment_Plan(treatment_id),
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+    FOREIGN KEY (user_id) REFERENCES Employee(employee_id)
 );

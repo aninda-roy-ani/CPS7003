@@ -6,9 +6,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # MongoDB setup
-mongo_client = MongoClient('mongodb://localhost:27017/')  # Adjust the connection string as needed
+mongo_client = MongoClient('mongodb://localhost:27017/')
 mongo_db = mongo_client['healthcare_db']
-diagnosis_report_collection = mongo_db['Diagnosis_Report']
+diagnosis_report_collection = mongo_db['Diagnosis_Reports']
 
 
 def save_data_to_mongodb(patient_id):
@@ -73,7 +73,7 @@ def print_diagnosis_report(report):
 
 if __name__ == "__main__":
     patient_id = 1
-    save_data_to_mongodb(patient_id)
+    #save_data_to_mongodb(patient_id)
     reports = fetch_diagnosis_reports_by_patient_id(patient_id)
     for report in reports:
         print_diagnosis_report(report)

@@ -1,5 +1,5 @@
 from persistence.cruds.treatment_team_assignment_crud import TreatmentTeamAssignmentCRUD
-from services.user_service import UserService
+from services.employee_service import EmployeeService
 from services.role_service import RoleService
 import logging
 
@@ -10,15 +10,15 @@ class TreatmentTeamAssignmentService:
     def __init__(self):
         self.assignment_crud = TreatmentTeamAssignmentCRUD()
         self.role_service = RoleService()
-        self.user_service = UserService()
+        self.employee_service = EmployeeService()
         self.logger = logging.getLogger(__name__)
 
     # create
-    def create_assignment(self, patient_id, treatment_id, user_id):
-        if not all((patient_id, treatment_id, user_id)):
+    def create_assignment(self, patient_id, treatment_id, employee_id):
+        if not all((patient_id, treatment_id, employee_id)):
             self.logger.error("Missing assignment creation info")
             return False
-        self.assignment_crud.create_assignment(patient_id, treatment_id, user_id)
+        self.assignment_crud.create_assignment(patient_id, treatment_id, employee_id)
         return True
 
     # retrieve
@@ -31,16 +31,16 @@ class TreatmentTeamAssignmentService:
     def retrieve_assignment_by_treatment_id(self, treatment_id):
         teams = self.assignment_crud.retrieve_assignments_by_treatment_id(treatment_id)
         for team in teams:
-            user = self.user_service.retrieve_user(team.user_id)
-            team.name = user.first_name + " " + user.last_name
-            team.role = self.role_service.retrieve_role(user.role_id).role_name
+            employee = self.employee_service.retrieve_employee(team.employee_id)
+            team.name = employee.first_name + " " + employee.last_name
+            team.role = self.role_service.retrieve_role(employee.role_id).role_name
         return teams
 
     def retrieve_all_assignments(self):
         return self.assignment_crud.retrieve_all_assignments()
 
     # update
-    def update_assignment(self, assignment_id, patient_id=None, treatment_id=None, user_id=None):
+    def update_assignment(self, assignment_id, patient_id=None, treatment_id=None, employee_id=None):
         if not assignment_id:
             self.logger.error("No assignment id provided")
             return False
@@ -52,9 +52,9 @@ class TreatmentTeamAssignmentService:
             assignment.patient_id = patient_id
         if treatment_id:
             assignment.treatment_id = treatment_id
-        if user_id:
-            assignment.user_id = user_id
-        self.assignment_crud.update_assignment(assignment_id, patient_id, treatment_id, user_id)
+        if employee_id:
+            assignment.employee_id = employee_id
+        self.assignment_crud.update_assignment(assignment_id, patient_id, treatment_id, employee_id)
         return True
 
     # delete
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     x.create_assignment(1, 1, 5)
     x.create_assignment(1, 1, 3)
     x.create_assignment(1, 1, 2)
-    '''
     x.delete_assignment(2)
+    '''
     all = x.retrieve_all_assignments()
     print([a.assignment_id for a in all])

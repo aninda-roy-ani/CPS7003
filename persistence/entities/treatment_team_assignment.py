@@ -8,8 +8,9 @@ class TreatmentTeamAssignment(Base):
     assignment_id = Column(Integer, primary_key=True, autoincrement=True)
     patient_id = Column(Integer)
     treatment_id = Column(Integer)
-    user_id = Column(Integer)
+    employee_id = Column(Integer)
 
     ForeignKeyConstraint(
-        ['patient_id', 'treatment_id', 'user_id'], ['Patient.patient_id', 'Treatment_Plan.treatment_id', 'User.user_id']
+        ['patient_id', 'treatment_id', 'employee_id'],
+        ['Patient.patient_id', 'Treatment_Plan.treatment_id', 'Employee.employee_id']
     )
