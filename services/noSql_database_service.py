@@ -1,5 +1,9 @@
 from pymongo import MongoClient
+
 from services.patient_service import PatientService
+from services.diagnosis_service import DiagnosisService
+from services.treatment_plan_service import TreatmentPlanService
+from services.treatment_team_assignment_service import TreatmentTeamAssignmentService
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -8,7 +12,7 @@ logger = logging.getLogger(__name__)
 # MongoDB setup
 mongo_client = MongoClient('mongodb://localhost:27017/')
 mongo_db = mongo_client['healthcare_db']
-diagnosis_report_collection = mongo_db['Diagnosis_Reports']
+diagnosis_report_collection = mongo_db['Diagnosis_Report_Collection']
 
 
 def save_data_to_mongodb(patient_id):
@@ -71,9 +75,48 @@ def print_diagnosis_report(report):
     print(report.get('note', 'N/A'))
 
 
+class DiagnosisReportService:
+    def __init__(self):
+        self.patient = PatientService()
+        self.diagnosis = DiagnosisService()
+        self.plan = TreatmentPlanService()
+        self.assignment = TreatmentTeamAssignmentService()
+
+    def check_pending_reports(self):
+        patients = self.patient.retrieve_all_patients()
+        pending_patients_id = []
+        for p in patients:
+            diagnoses = self.diagnosis.retrieve_diagnoses_by_patient_id(p.patient_id)
+            plans = self.plan.retrieve_treatment_plan_by_patient_id(p.patient_id)
+            assignments = self.assignment.retrieve_assignment_by_patient_id(p.patient_id)
+            if diagnoses and plans and assignments:
+                if p.patient_id not in self.check_available_reports():
+                    pending_patients_id.append(p.patient_id)
+            return pending_patients_id
+
+    def save_new_report(self, patient_id):
+        save_data_to_mongodb(patient_id)
+
+    def check_available_reports(self):
+        reports = fetch_all_diagnosis_reports()
+        patient_ids = []
+        for report in reports:
+            patient_ids.append(report['patient_info']['patient_id'])
+        return patient_ids
+
+    def print_diagnosis_report(self, patient_id):
+        reports = fetch_diagnosis_reports_by_patient_id(patient_id)
+        print_diagnosis_report(reports[len(reports) - 1])
+
+
+
 if __name__ == "__main__":
-    patient_id = 1
+    #patient_id = 2
     #save_data_to_mongodb(patient_id)
-    reports = fetch_diagnosis_reports_by_patient_id(patient_id)
-    for report in reports:
-        print_diagnosis_report(report)
+    #reports = fetch_diagnosis_reports_by_patient_id(patient_id)
+    #for report in reports:
+    #    print_diagnosis_report(report)
+    x = DiagnosisReportService()
+    print(x.check_available_reports())
+    print(x.check_pending_reports())
+
