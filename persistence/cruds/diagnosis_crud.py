@@ -14,11 +14,11 @@ class DiagnosisCRUD:
         self.logger = logging.getLogger(__name__)
 
     # create
-    def create_diagnosis_plan(self, patient_id, diagnosis_details, diagnosis_date):
+    def create_diagnosis_plan(self, patient_id, diagnosis_details, diagnosis_date, result):
         session = self.Session()
         try:
             plan = Diagnosis(patient_id=patient_id, diagnosis_details=diagnosis_details,
-                             diagnosis_date=diagnosis_date, result=None)
+                             diagnosis_date=diagnosis_date, result=result)
             session.add(plan)
             session.commit()
             logging.info(f"Diagnosis plan for Patient ID {patient_id} created")

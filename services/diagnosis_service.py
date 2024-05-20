@@ -16,11 +16,11 @@ class DiagnosisService:
         self.logger = logging.getLogger(__name__)
 
     # create
-    def create_diagnosis_plan(self, patient_id, diagnosis_details, diagnosis_date):
-        if not all((patient_id, diagnosis_details, diagnosis_date)):
+    def create_diagnosis_plan(self, patient_id, diagnosis_details, diagnosis_date, result):
+        if not all((patient_id, diagnosis_details, diagnosis_date, result)):
             self.logger.error("Missing diagnosis plan creation info")
             return False
-        self.diagnosis_crud.create_diagnosis_plan(patient_id, diagnosis_details, diagnosis_date)
+        self.diagnosis_crud.create_diagnosis_plan(patient_id, diagnosis_details, diagnosis_date, result)
         return True
 
     # retrieve
@@ -42,7 +42,7 @@ class DiagnosisService:
         return diagnoses
 
     # update
-    def update_diagnosis_plan(self, diagnosis_id, patient_id=None, diagnosis_details=None, diagnosis_date=None):
+    def update_diagnosis_plan(self, diagnosis_id, patient_id=None, diagnosis_details=None, diagnosis_date=None, result=None):
         if not diagnosis_id:
             self.logger.error("No diagnosis id provided")
             return False
@@ -56,7 +56,9 @@ class DiagnosisService:
             diagnosis_plan.diagnosis_details = diagnosis_details
         if diagnosis_date:
             diagnosis_plan.diagnosis_date = diagnosis_date
-        self.diagnosis_crud.update_diagnosis_plan(diagnosis_id, patient_id, diagnosis_details, diagnosis_date)
+        if result:
+            diagnosis_plan.result = result
+        self.diagnosis_crud.update_diagnosis_plan(diagnosis_id, patient_id, diagnosis_details, diagnosis_date, result)
         return True
 
     # delete
