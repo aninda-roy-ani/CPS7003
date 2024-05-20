@@ -1,6 +1,12 @@
 -- Users Table
+CREATE TABLE IF NOT EXISTS User (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS Employee (
-    employee_id INTEGER PRIMARY KEY,
+    employee_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     role_id INTEGER,
@@ -9,13 +15,13 @@ CREATE TABLE IF NOT EXISTS Employee (
 
 -- Roles Table
 CREATE TABLE IF NOT EXISTS Role (
-    role_id INTEGER PRIMARY KEY,
+    role_id INTEGER PRIMARY KEY AUTOINCREMENT,
     role_name TEXT UNIQUE NOT NULL
 );
 
 -- Patients Table
 CREATE TABLE IF NOT EXISTS Patient (
-    patient_id INTEGER PRIMARY KEY,
+    patient_id INTEGER PRIMARY KEY AUTOINCREMENT,
     patient_name TEXT NOT NULL,
     date_of_birth DATE,
     gender TEXT,
@@ -25,7 +31,7 @@ CREATE TABLE IF NOT EXISTS Patient (
 
 -- Medical History Table
 CREATE TABLE IF NOT EXISTS Medical_History (
-    history_id INTEGER PRIMARY KEY,
+    history_id INTEGER PRIMARY KEY AUTOINCREMENT,
     patient_id INTEGER NOT NULL,
     admission_date DATE,
     discharge_date DATE,
@@ -36,7 +42,7 @@ CREATE TABLE IF NOT EXISTS Medical_History (
 
 -- Treatment Plan Table
 CREATE TABLE IF NOT EXISTS Treatment_Plan (
-    treatment_id INTEGER PRIMARY KEY,
+    treatment_id INTEGER PRIMARY KEY AUTOINCREMENT,
     patient_id INTEGER NOT NULL,
     diagnosis_id INTEGER NOT NULL,
     treatment_details TEXT,
@@ -48,7 +54,7 @@ CREATE TABLE IF NOT EXISTS Treatment_Plan (
 
 -- Diagnosis Plan Table
 CREATE TABLE IF NOT EXISTS Diagnosis (
-    diagnosis_id INTEGER PRIMARY KEY,
+    diagnosis_id INTEGER PRIMARY KEY AUTOINCREMENT,
     patient_id INTEGER NOT NULL,
     diagnosis_details TEXT,
     diagnosis_date DATE,
@@ -58,7 +64,7 @@ CREATE TABLE IF NOT EXISTS Diagnosis (
 
 -- Treatment Team Assignment Table
 CREATE TABLE IF NOT EXISTS Treatment_Team_Assignment (
-    assignment_id INTEGER PRIMARY KEY,
+    assignment_id INTEGER PRIMARY KEY AUTOINCREMENT,
     patient_id INTEGER NOT NULL,
     treatment_id INTEGER NOT NULL,
     employee_id INTEGER,
