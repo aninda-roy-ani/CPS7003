@@ -1,13 +1,8 @@
 from datetime import datetime
 
 from persistence.cruds.patient_crud import PatientCRUD
-from persistence.cruds.diagnosis_crud import DiagnosisCRUD
-from persistence.cruds.treatment_plan_crud import TreatmentPlanCRUD
-from persistence.cruds.treatment_team_assignment_crud import TreatmentTeamAssignmentCRUD
 
 from services.diagnosis_service import DiagnosisService
-from services.treatment_plan_service import TreatmentPlanService
-from services.treatment_team_assignment_service import TreatmentTeamAssignmentService
 import logging
 
 
