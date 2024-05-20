@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from persistence.cruds.diagnosis_crud import DiagnosisCRUD
+from services.treatment_plan_service import TreatmentPlanService
+from services.treatment_team_assignment_service import TreatmentTeamAssignmentService
 import logging
 
 
@@ -9,6 +11,8 @@ class DiagnosisService:
     # constructor
     def __init__(self):
         self.diagnosis_crud = DiagnosisCRUD()
+        self.treatment_plan_service = TreatmentPlanService()
+        self.treatment_team_assignment_service = TreatmentTeamAssignmentService()
         self.logger = logging.getLogger(__name__)
 
     # create
@@ -31,7 +35,11 @@ class DiagnosisService:
         return self.diagnosis_crud.retrieve_all_diagnosis_plans()
 
     def retrieve_diagnosis_by_patient_id(self, patient_id):
-        return self.diagnosis_crud.retrieve_diagnosis_by_patient_id(patient_id)
+        diagnoses = self.diagnosis_crud.retrieve_diagnosis_by_patient_id(patient_id)
+        for diagnose in diagnoses:
+            diagnose.treatment_plans = (self.treatment_plan_service.retrieve_treatment_plan_by_diagnosis_id
+                                       (diagnose.diagnosis_id))
+        return diagnoses
 
     # update
     def update_diagnosis_plan(self, diagnosis_id, patient_id=None, diagnosis_details=None, diagnosis_date=None):

@@ -56,7 +56,7 @@ class DiagnosisCRUD:
     def retrieve_diagnosis_by_patient_id(self, patient_id):
         session = self.Session()
         try:
-            plan = session.query(Diagnosis).filter_by(patient_id=patient_id).first()
+            plan = session.query(Diagnosis).filter_by(patient_id=patient_id).all()
             if plan:
                 return plan
             else:

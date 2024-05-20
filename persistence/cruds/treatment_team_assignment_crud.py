@@ -41,7 +41,10 @@ class TreatmentTeamAssignmentCRUD:
         finally:
             session.close()
 
-    # retrieve all
+    def retrieve_assignments_by_treatment_id(self, treatment_id):
+        session = self.Session()
+        return session.query(TreatmentTeamAssignment).filter_by(treatment_id=treatment_id).all()
+
     def retrieve_all_assignments(self):
         session = self.Session()
         try:

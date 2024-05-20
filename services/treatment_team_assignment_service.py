@@ -1,4 +1,6 @@
 from persistence.cruds.treatment_team_assignment_crud import TreatmentTeamAssignmentCRUD
+from services.user_service import UserService
+from services.role_service import RoleService
 import logging
 
 
@@ -7,6 +9,8 @@ class TreatmentTeamAssignmentService:
     # constructor
     def __init__(self):
         self.assignment_crud = TreatmentTeamAssignmentCRUD()
+        self.role_service = RoleService()
+        self.user_service = UserService()
         self.logger = logging.getLogger(__name__)
 
     # create
@@ -24,7 +28,14 @@ class TreatmentTeamAssignmentService:
             return None
         return self.assignment_crud.retrieve_assignment(assignment_id)
 
-    # retrieve all
+    def retrieve_assignment_by_treatment_id(self, treatment_id):
+        teams = self.assignment_crud.retrieve_assignments_by_treatment_id(treatment_id)
+        for team in teams:
+            user = self.user_service.retrieve_user(team.user_id)
+            team.name = user.first_name + " " + user.last_name
+            team.role = self.role_service.retrieve_role(user.role_id).role_name
+        return teams
+
     def retrieve_all_assignments(self):
         return self.assignment_crud.retrieve_all_assignments()
 

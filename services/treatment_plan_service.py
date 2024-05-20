@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from persistence.cruds.treatment_plan_crud import TreatmentPlanCRUD
+from persistence.entities.treatment_plan import TreatmentPlan
+from services.treatment_team_assignment_service import TreatmentTeamAssignmentService
 import logging
 
 
@@ -9,6 +11,7 @@ class TreatmentPlanService:
     # constructor
     def __init__(self):
         self.treatment_plan_crud = TreatmentPlanCRUD()
+        self.treatment_team_assignment_service = TreatmentTeamAssignmentService()
         self.logger = logging.getLogger(__name__)
 
     # create
@@ -26,7 +29,13 @@ class TreatmentPlanService:
             return None
         return self.treatment_plan_crud.retrieve_treatment_plan(treatment_id)
 
-    # retrieve all
+    def retrieve_treatment_plan_by_diagnosis_id(self, diagnosis_id):
+        plans = self.treatment_plan_crud.retrieve_treatment_plan_by_diagnosis_id(diagnosis_id)
+        for plan in plans:
+            plan.assignments = (
+                self.treatment_team_assignment_service.retrieve_assignment_by_treatment_id(plan.treatment_id))
+        return plans
+
     def retrieve_all_treatment_plans(self):
         return self.treatment_plan_crud.retrieve_all_treatment_plans()
 
