@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS Diagnosis (
     patient_id INTEGER NOT NULL,
     diagnosis_details TEXT,
     diagnosis_date DATE,
+    result TEXT,
     FOREIGN KEY (patient_id) REFERENCES Patients(patient_id)
 );
 

@@ -18,7 +18,7 @@ class DiagnosisCRUD:
         session = self.Session()
         try:
             plan = Diagnosis(patient_id=patient_id, diagnosis_details=diagnosis_details,
-                                  diagnosis_date=diagnosis_date)
+                             diagnosis_date=diagnosis_date, result=None)
             session.add(plan)
             session.commit()
             logging.info(f"Diagnosis plan for Patient ID {patient_id} created")
@@ -67,7 +67,7 @@ class DiagnosisCRUD:
             session.close()
 
     # update
-    def update_diagnosis_plan(self, diagnosis_id, patient_id, diagnosis_details, diagnosis_date):
+    def update_diagnosis_plan(self, diagnosis_id, patient_id, diagnosis_details, diagnosis_date, result):
         session = self.Session()
         try:
             plan = session.query(Diagnosis).filter_by(diagnosis_id=diagnosis_id).first()
@@ -75,6 +75,7 @@ class DiagnosisCRUD:
                 plan.patient_id = patient_id
                 plan.diagnosis_details = diagnosis_details
                 plan.diagnosis_date = diagnosis_date
+                plan.result = result
                 session.commit()
                 logging.info(f"Diagnosis plan with ID {diagnosis_id} updated")
             else:

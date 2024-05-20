@@ -82,6 +82,7 @@ class PatientService:
                     "diagnosis_id": d.diagnosis_id,
                     "diagnosis_details": d.diagnosis_details,
                     "diagnosis_date": d.diagnosis_date.strftime('%Y-%m-%d'),
+                    "result": d.result,
                     "treatment_plans": [
                         {
                             "treatment_id": t.treatment_id,

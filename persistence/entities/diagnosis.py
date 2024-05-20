@@ -10,6 +10,7 @@ class Diagnosis(Base):
     patient_id = Column(Integer, nullable=False)
     diagnosis_details = Column(String)
     diagnosis_date = Column(Date)
+    result = Column(String)
 
     ForeignKeyConstraint(
         ['patient_id'], ['Patient.patient_id']

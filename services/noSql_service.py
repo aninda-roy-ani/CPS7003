@@ -72,10 +72,7 @@ def print_diagnosis_report(report):
 
 
 if __name__ == "__main__":
-    patient_id = 1  # Replace with the actual patient ID
-    '''reports = fetch_diagnosis_reports_by_patient_id(patient_id)
-    for report in reports:
-        print_diagnosis_report(report)'''
+    patient_id = 1
     save_data_to_mongodb(patient_id)
     reports = fetch_diagnosis_reports_by_patient_id(patient_id)
     for report in reports:
