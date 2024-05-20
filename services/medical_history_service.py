@@ -38,16 +38,16 @@ class MedicalHistoryService:
         if not history:
             self.logger.error(f"Medical history with ID {history_id} does not exist")
             return False
-        if patient_id:
-            history.patient_id = patient_id
-        if admission_date:
-            history.admission_date = admission_date
-        if discharge_date:
-            history.discharge_date = discharge_date
-        if diagnosis:
-            history.diagnosis = diagnosis
-        if medical_notes:
-            history.medical_notes = medical_notes
+        if not patient_id:
+            patient_id = history.patient_id
+        if not admission_date:
+            admission_date = history.admission_date
+        if not discharge_date:
+            discharge_date = history.discharge_date
+        if not diagnosis:
+            diagnosis = history.diagnosis
+        if not medical_notes:
+            medical_notes = history.medical_notes
         self.medical_history_crud.update_medical_history(history_id, patient_id, admission_date, discharge_date, diagnosis, medical_notes)
         return True
 

@@ -50,14 +50,14 @@ class DiagnosisService:
         if not diagnosis_plan:
             self.logger.error(f"Diagnosis plan with ID {diagnosis_id} does not exist")
             return False
-        if patient_id:
-            diagnosis_plan.patient_id = patient_id
-        if diagnosis_details:
-            diagnosis_plan.diagnosis_details = diagnosis_details
-        if diagnosis_date:
-            diagnosis_plan.diagnosis_date = diagnosis_date
-        if result:
-            diagnosis_plan.result = result
+        if not patient_id:
+            patient_id = diagnosis_plan.patient_id
+        if not diagnosis_details:
+            diagnosis_details = diagnosis_plan.diagnosis_details
+        if not diagnosis_date:
+            diagnosis_date = diagnosis_plan.diagnosis_date
+        if not result:
+            result = diagnosis_plan.result
         self.diagnosis_crud.update_diagnosis_plan(diagnosis_id, patient_id, diagnosis_details, diagnosis_date, result)
         return True
 
@@ -72,8 +72,6 @@ class DiagnosisService:
 
 if __name__ == "__main__":
     x = DiagnosisService()
-    x.create_diagnosis_plan(1, 'diabetics', datetime(2024, 5, 20))
-    x.create_diagnosis_plan(2, 'hamstring', datetime(2024, 6, 1))
     alls = x.retrieve_all_diagnosis_plans()
     for a in alls:
         print(a.diagnosis_id, a.diagnosis_date, a.diagnosis_details)

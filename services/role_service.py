@@ -12,14 +12,15 @@ class RoleService:
     # create
     def create_role(self, role_name):
         if not role_name:
-            logging.error("No role name provided")
+            self.logger.error("No role name provided")
             return False
         self.role_crud.create_role(role_name)
+        return True
 
     # retrieve
     def retrieve_role(self, role_id):
         if not role_id:
-            logging.error("No role id")
+            self.logger.error("No role id")
             return None
         return self.role_crud.retrieve_role(role_id)
 
@@ -31,14 +32,20 @@ class RoleService:
         if not role_id or not role_name:
             logging.error("Role update info missing")
             return False
-        self.role_crud.update_role(role_id, role_name)
+        role = self.role_crud.retrieve_role(role_id)
+        if not role:
+            self.logger.error(f"Role with ID {role_id} does not exist")
+            return False
+        self.role_crud.update_role(role_id or role.role_id, role_name or role.role_name)
+        return True
 
     # delete
     def delete_role(self, role_id):
         if not role_id:
-            logging.error("No role id provided")
+            self.logger.error("No role id provided")
             return False
         self.role_crud.delete_role(role_id)
+        return True
 
 
 if __name__ == "__main__":

@@ -36,8 +36,12 @@ class EmployeeService:
         if not employee:
             logging.error(f"Employee with ID {employee_id} does not exist")
             return False
-        if role_id:
-            employee.role_id = role_id
+        if not first_name:
+            first_name = employee.first_name
+        if not last_name:
+            last_name = employee.last_name
+        if not role_id:
+            role_id = employee.role_id
         self.employee_crud.update_employee(employee_id, first_name, last_name, role_id)
         return True
 

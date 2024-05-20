@@ -48,17 +48,11 @@ class TreatmentPlanService:
         if not treatment_plan:
             self.logger.error(f"Treatment plan with ID {treatment_id} does not exist")
             return False
-        if patient_id:
-            treatment_plan.patient_id = patient_id
-        if diagnosis_id:
-            treatment_plan.diagnosis_id = diagnosis_id
-        if treatment_details:
-            treatment_plan.treatment_details = treatment_details
-        if start_date:
-            treatment_plan.start_date = start_date
-        if end_date:
-            treatment_plan.end_date = end_date
-        self.treatment_plan_crud.update_treatment_plan(treatment_id, patient_id, diagnosis_id, treatment_details, start_date, end_date)
+        self.treatment_plan_crud.update_treatment_plan(treatment_id, patient_id or treatment_plan.patient_id,
+                                                       diagnosis_id or treatment_plan.diagnosis_id,
+                                                       treatment_details or treatment_plan.treatment_details,
+                                                       start_date or treatment_plan.start_date,
+                                                       end_date or treatment_plan.end_date)
         return True
 
     # delete

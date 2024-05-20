@@ -48,13 +48,8 @@ class TreatmentTeamAssignmentService:
         if not assignment:
             self.logger.error(f"Assignment with ID {assignment_id} does not exist")
             return False
-        if patient_id:
-            assignment.patient_id = patient_id
-        if treatment_id:
-            assignment.treatment_id = treatment_id
-        if employee_id:
-            assignment.employee_id = employee_id
-        self.assignment_crud.update_assignment(assignment_id, patient_id, treatment_id, employee_id)
+        self.assignment_crud.update_assignment(assignment_id, patient_id or assignment.patient_id, treatment_id or
+                                               assignment.treatment_id, employee_id or assignment.employee_id)
         return True
 
     # delete
