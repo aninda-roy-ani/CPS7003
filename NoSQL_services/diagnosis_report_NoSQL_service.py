@@ -9,9 +9,6 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-mongo_client = MongoClient('mongodb://localhost:27017/')
-mongo_db = mongo_client['healthcare_db']
-diagnosis_report_collection = mongo_db['Diagnosis_Report_Collection']
 
 def print_diagnosis_report(report):
     print("Patient Info:")

@@ -1,4 +1,4 @@
-from services.diagnosis_report_NoSQL_service import DiagnosisReportService, logger
+from NoSQL_services.diagnosis_report_NoSQL_service import DiagnosisReportService, logger
 
 
 class DiagnosisReportTUI:
