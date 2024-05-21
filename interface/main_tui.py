@@ -6,12 +6,12 @@ from interface.role_tui import RoleTUI
 from interface.treatment_plan_tui import TreatmentPlanTUI
 from interface.treatment_team_assignment_tui import TreatmentTeamAssignmentTUI
 from interface.diagnosis_report_tui import DiagnosisReportTUI
-from services.user_service import UserService
+from NoSQL_services.user_auth_NoSQL_service import UserAuthService
 
 
 class MainTUI:
     def __init__(self):
-        self.user = UserService()
+        self.user = UserAuthService()
 
     def start(self):
         print('''
@@ -92,7 +92,7 @@ Enter the security code: ''')
         if security_code == 'CPS7003':
             username = input('Enter username: ')
             password = input('Enter password: ')
-            booli = self.user.create_user(username, password)
+            booli = self.user.sign_up(username, password)
             if not booli:
                 print("Username already exists!")
                 self.signup()
@@ -108,7 +108,7 @@ Enter the security code: ''')
         print()
         username = input('Enter your username: ')
         password = input('Enter your password: ')
-        if self.user.verify(username, password):
+        if self.user.login(username, password):
             print('''
 HEALTHCARE USER INTERFACE
 -------------------------
