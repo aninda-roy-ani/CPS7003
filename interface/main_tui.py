@@ -5,6 +5,7 @@ from interface.patient_tui import PatientTUI
 from interface.role_tui import RoleTUI
 from interface.treatment_plan_tui import TreatmentPlanTUI
 from interface.treatment_team_assignment_tui import TreatmentTeamAssignmentTUI
+from interface.diagnosis_report_tui import DiagnosisReportTUI
 from services.user_service import UserService
 
 
@@ -45,7 +46,7 @@ What do you want to do?
 5. DIAGNOSIS PLAN MANAGEMENT
 6. TREATMENT PLAN MANAGEMENT
 7. TREATMENT TEAM ASSIGNMENT MANAGEMENT
-8. GENERATE PATIENT DIAGNOSIS REPORT
+8. PATIENTS' DIAGNOSIS REPORT MANAGEMENT (NoSQL)
 9. Exit
 Enter your choice: ''')
             choice = input()
@@ -71,7 +72,8 @@ Enter your choice: ''')
                 assignment_management = TreatmentTeamAssignmentTUI()
                 assignment_management.menu()
             elif choice == '8':
-                pass
+                report_management = DiagnosisReportTUI()
+                report_management.menu()
             elif choice == '9':
                 self.start()
             else:
@@ -88,11 +90,15 @@ Enter the security code: ''')
         # Therefore, this is just a simple technique to restrict unauthorised users
         # since anyone opening the system to sign up and login doesn't make sense.
         if security_code == 'CPS7003':
-            username = input('Enter your username: ')
-            password = input('Enter your password: ')
-            self.user.create_user(username, password)
-            print()
-            self.start()
+            username = input('Enter username: ')
+            password = input('Enter password: ')
+            booli = self.user.create_user(username, password)
+            if not booli:
+                print("Username already exists!")
+                self.signup()
+            else:
+                print("Sign Up Successful!")
+                self.start()
         else:
             print('Invalid security code! Going back!')
             print()

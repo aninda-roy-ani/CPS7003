@@ -36,6 +36,9 @@ class TreatmentTeamAssignmentService:
             team.role = self.role_service.retrieve_role(employee.role_id).role_name
         return teams
 
+    def retrieve_assignment_by_patient_id(self, p):
+        return self.assignment_crud.retrieve_assignments_by_patient_id(p)
+
     def retrieve_all_assignments(self):
         return self.assignment_crud.retrieve_all_assignments()
 
@@ -59,6 +62,7 @@ class TreatmentTeamAssignmentService:
             return False
         self.assignment_crud.delete_assignment(assignment_id)
         return True
+
 
 
 if __name__ == "__main__":

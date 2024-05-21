@@ -45,6 +45,19 @@ class TreatmentTeamAssignmentCRUD:
         session = self.Session()
         return session.query(TreatmentTeamAssignment).filter_by(treatment_id=treatment_id).all()
 
+    def retrieve_assignments_by_patient_id(self, patient_id):
+        session = self.Session()
+        try:
+            plan = session.query(TreatmentTeamAssignment).filter_by(patient_id=patient_id).all()
+            if plan:
+                return plan
+            else:
+                logging.error(f"Treatment assignment with Patient ID {plan} does not exist")
+        except SQLAlchemyError as e:
+            logging.error(f"Error while retrieving treatment plan: {str(e)}")
+        finally:
+            session.close()
+
     def retrieve_all_assignments(self):
         session = self.Session()
         try:
@@ -90,3 +103,7 @@ class TreatmentTeamAssignmentCRUD:
             logging.error(f"Error while deleting assignment: {str(e)}")
         finally:
             session.close()
+
+if __name__ == "__main__":
+    x = TreatmentTeamAssignmentCRUD()
+    print(x.retrieve_assignments_by_patient_id(2))

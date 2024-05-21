@@ -19,6 +19,10 @@ class UserService:
         self.user_crud.delete_user(username)
 
     def create_user(self, username, password):
+        user = self.user_crud.retrieve_user(username)
+        if user:
+            return False
         self.user_crud.create_user(username, password)
+        return True
 
 

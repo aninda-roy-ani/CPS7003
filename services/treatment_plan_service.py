@@ -36,6 +36,10 @@ class TreatmentPlanService:
                 self.treatment_team_assignment_service.retrieve_assignment_by_treatment_id(plan.treatment_id))
         return plans
 
+    def retrieve_treatment_plan_by_patient_id(self, patient_id):
+        plans = self.treatment_plan_crud.retrieve_treatment_plan_by_patient_id(patient_id)
+        return plans
+
     def retrieve_all_treatment_plans(self):
         return self.treatment_plan_crud.retrieve_all_treatment_plans()
 

@@ -55,6 +55,19 @@ class TreatmentPlanCRUD:
         finally:
             session.close()
 
+    def retrieve_treatment_plan_by_patient_id(self, patient_id):
+        session = self.Session()
+        try:
+            plan = session.query(TreatmentPlan).filter_by(patient_id=patient_id).all()
+            if plan:
+                return plan
+            else:
+                logging.error(f"Treatment plan with Patient ID {plan} does not exist")
+        except SQLAlchemyError as e:
+            logging.error(f"Error while retrieving treatment plan: {str(e)}")
+        finally:
+            session.close()
+
     def retrieve_all_treatment_plans(self):
         session = self.Session()
         try:

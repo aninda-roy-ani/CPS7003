@@ -41,6 +41,9 @@ class DiagnosisService:
                                        (diagnose.diagnosis_id))
         return diagnoses
 
+    def retrieve_diagnoses_by_patient_id(self, patient_id):
+        return self.diagnosis_crud.retrieve_diagnosis_by_patient_id(patient_id)
+
     # update
     def update_diagnosis_plan(self, diagnosis_id, patient_id=None, diagnosis_details=None, diagnosis_date=None, result=None):
         if not diagnosis_id:
