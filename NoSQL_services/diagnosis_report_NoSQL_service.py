@@ -66,7 +66,11 @@ class DiagnosisReportService:
 
     def save_new_report(self, patient_id):
         try:
-            self.diagnosis_report_collection.insert_one(self.patient.retrieve_patient_diagnostic_details(patient_id))
+            report = self.diagnosis_report_collection.find_one({"patient_info.patient_id": patient_id})
+            if report:
+                data = self.patient.retrieve_patient_diagnostic_details(patient_id)
+                data['_id'] = report['_id']
+                self.diagnosis_report_collection.replace_one({"patient_info.patient_id": patient_id}, data)
             logging.info(f"Patient diagnosis report saved: {patient_id}")
         except Exception as e:
             logger.error(e)
@@ -84,9 +88,11 @@ class DiagnosisReportService:
 
     def print_diagnosis_report(self, patient_id):
         try:
-            reports = list(self.diagnosis_report_collection.find({"patient_info.patient_id": patient_id}))
-            for report in reports:
+            report = self.diagnosis_report_collection.find_one({"patient_info.patient_id": patient_id})
+            if report:
                 print_diagnosis_report(report)
+            else:
+                logger.error(f"No diagnosis report found with patient ID: {patient_id}")
         except Exception as e:
             logger.error("Error while fetching diagnosis reports: {}".format(str(e)))
 
@@ -100,4 +106,6 @@ if __name__ == "__main__":
     x = DiagnosisReportService()
     print(x.check_available_reports())
     print(x.check_pending_reports())
+    x.save_new_report(1)
+    x.print_diagnosis_report(1)
 
