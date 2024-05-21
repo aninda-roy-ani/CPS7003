@@ -59,8 +59,6 @@ class DiagnosisCRUD:
             plan = session.query(Diagnosis).filter_by(patient_id=patient_id).all()
             if plan:
                 return plan
-            else:
-                logging.error(f"Diagnosis plan with Patient ID {patient_id} does not exist")
         except SQLAlchemyError as e:
             logging.error(f"Error while retrieving diagnosis plan: {str(e)}")
         finally:

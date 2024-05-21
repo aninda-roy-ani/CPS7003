@@ -9,39 +9,9 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# MongoDB setup
 mongo_client = MongoClient('mongodb://localhost:27017/')
 mongo_db = mongo_client['healthcare_db']
 diagnosis_report_collection = mongo_db['Diagnosis_Report_Collection']
-
-
-def save_data_to_mongodb(patient_id):
-    try:
-        patient = PatientService()
-        diagnosis_report_collection.insert_one(patient.retrieve_patient_diagnostic_details(patient_id))
-    except Exception as e:
-        logger.error(e)
-
-
-def fetch_all_diagnosis_reports():
-    try:
-        reports = list(diagnosis_report_collection.find())
-        logger.info("Fetched all diagnosis reports successfully")
-        return reports
-    except Exception as e:
-        logger.error("Error while fetching diagnosis reports: {}".format(str(e)))
-        return []
-
-
-def fetch_diagnosis_reports_by_patient_id(patient_id):
-    try:
-        reports = list(diagnosis_report_collection.find({"patient_info.patient_id": patient_id}))
-        logger.info(f"Fetched diagnosis reports for Patient ID {patient_id} successfully")
-        return reports
-    except Exception as e:
-        logger.error("Error while fetching diagnosis reports: {}".format(str(e)))
-        return []
-
 
 def print_diagnosis_report(report):
     print("Patient Info:")
@@ -59,14 +29,14 @@ def print_diagnosis_report(report):
         print(f"  Date: {diagnosis['diagnosis_date']}")
         print(f"  Result: {diagnosis.get('result', 'N/A')}")
 
-        print("  Treatment Plans:")
+        print("\n  Treatment Plans:")
         for plan in diagnosis['treatment_plans']:
             print(f"    Treatment ID: {plan['treatment_id']}")
             print(f"    Details: {plan['treatment_details']}")
             print(f"    Start Date: {plan['start_date']}")
             print(f"    End Date: {plan['end_date']}")
 
-            print("    Assigned Teams:")
+            print("\n    Assigned Teams:")
             for team in plan['assigned_teams']:
                 print(f"      Name: {team['name']}")
                 print(f"      Role: {team['role']}")
@@ -81,6 +51,9 @@ class DiagnosisReportService:
         self.diagnosis = DiagnosisService()
         self.plan = TreatmentPlanService()
         self.assignment = TreatmentTeamAssignmentService()
+        self.mongo_client = MongoClient('mongodb://localhost:27017/')
+        self.mongo_db = self.mongo_client['healthcare_db']
+        self.diagnosis_report_collection = self.mongo_db['Diagnosis_Report_Collection']
 
     def check_pending_reports(self):
         patients = self.patient.retrieve_all_patients()
@@ -92,22 +65,33 @@ class DiagnosisReportService:
             if diagnoses and plans and assignments:
                 if p.patient_id not in self.check_available_reports():
                     pending_patients_id.append(p.patient_id)
-            return pending_patients_id
+        return pending_patients_id
 
     def save_new_report(self, patient_id):
-        save_data_to_mongodb(patient_id)
+        try:
+            self.diagnosis_report_collection.insert_one(self.patient.retrieve_patient_diagnostic_details(patient_id))
+            logging.info(f"Patient diagnosis report saved: {patient_id}")
+        except Exception as e:
+            logger.error(e)
 
     def check_available_reports(self):
-        reports = fetch_all_diagnosis_reports()
-        patient_ids = []
-        for report in reports:
-            patient_ids.append(report['patient_info']['patient_id'])
-        return patient_ids
+        try:
+            reports = list(self.diagnosis_report_collection.find())
+            patient_ids = []
+            for report in reports:
+                patient_ids.append(report['patient_info']['patient_id'])
+            return patient_ids
+        except Exception as e:
+            logger.error("Error while fetching diagnosis reports: {}".format(str(e)))
+            return None
 
     def print_diagnosis_report(self, patient_id):
-        reports = fetch_diagnosis_reports_by_patient_id(patient_id)
-        print_diagnosis_report(reports[len(reports) - 1])
-
+        try:
+            reports = list(self.diagnosis_report_collection.find({"patient_info.patient_id": patient_id}))
+            for report in reports:
+                print_diagnosis_report(report)
+        except Exception as e:
+            logger.error("Error while fetching diagnosis reports: {}".format(str(e)))
 
 
 if __name__ == "__main__":

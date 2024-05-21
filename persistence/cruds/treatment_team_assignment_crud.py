@@ -51,8 +51,6 @@ class TreatmentTeamAssignmentCRUD:
             plan = session.query(TreatmentTeamAssignment).filter_by(patient_id=patient_id).all()
             if plan:
                 return plan
-            else:
-                logging.error(f"Treatment assignment with Patient ID {plan} does not exist")
         except SQLAlchemyError as e:
             logging.error(f"Error while retrieving treatment plan: {str(e)}")
         finally:
