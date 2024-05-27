@@ -81,27 +81,14 @@ Enter your choice: ''')
 
     def signup(self):
         print()
-        print('''
-[A security code is needed which is provided from the
-admin to restrict unauthorised users from signing up]
-Enter the security code: ''')
-        security_code = input()
-        # There was a limitation in the project brief on what modules to be used!
-        # Therefore, this is just a simple technique to restrict unauthorised users
-        # since anyone opening the system to sign up and login doesn't make sense.
-        if security_code == 'CPS7003':
-            username = input('Enter username: ')
-            password = input('Enter password: ')
-            booli = self.user.sign_up(username, password)
-            if not booli:
-                print("Username already exists!")
-                self.signup()
-            else:
-                print("Sign Up Successful!")
-                self.start()
+        username = input('Enter username: ')
+        password = input('Enter password: ')
+        booli = self.user.sign_up(username, password)
+        if not booli:
+            print("Username already exists!")
+            self.signup()
         else:
-            print('Invalid security code! Going back!')
-            print()
+            print("Sign Up Successful!")
             self.start()
 
     def login(self):
