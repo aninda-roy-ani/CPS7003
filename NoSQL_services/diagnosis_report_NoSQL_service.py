@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+from database.mongodb_database import get_mongo_client
 
 from services.patient_service import PatientService
 from services.diagnosis_service import DiagnosisService
@@ -48,8 +48,7 @@ class DiagnosisReportService:
         self.diagnosis = DiagnosisService()
         self.plan = TreatmentPlanService()
         self.assignment = TreatmentTeamAssignmentService()
-        self.mongo_client = MongoClient('mongodb://localhost:27017/')
-        self.mongo_db = self.mongo_client['healthcare_db']
+        self.mongo_db = get_mongo_client()
         self.diagnosis_report_collection = self.mongo_db['Diagnosis_Report_Collection']
 
     def check_pending_reports(self):

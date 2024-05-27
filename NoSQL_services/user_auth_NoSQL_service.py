@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+from database.mongodb_database import get_mongo_client
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -7,8 +7,7 @@ logger = logging.getLogger(__name__)
 
 class UserAuthService:
     def __init__(self):
-        self.mongo_client = MongoClient('mongodb://localhost:27017/')
-        self.mongo_db = self.mongo_client['healthcare_db']
+        self.mongo_db = get_mongo_client()
         self.user_auth_collection = self.mongo_db['User_Auth']
 
     def sign_up(self, username, password):
