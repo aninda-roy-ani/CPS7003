@@ -1,4 +1,4 @@
-
+-- Employee Table
 CREATE TABLE IF NOT EXISTS Employee (
     employee_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
