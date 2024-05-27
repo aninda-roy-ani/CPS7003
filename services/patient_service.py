@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from persistence.cruds.patient_crud import PatientCRUD
 
 from services.diagnosis_service import DiagnosisService
